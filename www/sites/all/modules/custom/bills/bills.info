@@ -1,0 +1,7 @@
+name = Bills
+description = Custom module for Bills site.
+package = Bills
+core = 7.x
+
+dependencies[] = og
+dependencies[] = context

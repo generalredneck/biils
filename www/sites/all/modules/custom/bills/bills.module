@@ -1,0 +1,81 @@
+<?php
+
+function bills_block_info() {
+  $blocks = array();
+  $blocks['household_bills'] = array(
+    'info' => t('Household Bills'),
+    'cache' => DRUPAL_NO_CACHE,
+  );
+  return $blocks;
+}
+
+function bills_block_view($delta = '') {
+  global $user;
+  $block = array();
+  switch($delta) {
+    case 'household_bills':
+      $block['subject'] = t('Household Bills');
+      $og = og_context();
+      if (!empty($og)) {
+        // Check for group id here instead of user id.
+        $members = _bills_og_get_user_members($og['gid']);
+        $header = array('');
+        foreach($members as $member) {
+          $header[] = $member->name;
+        }
+        $rows = array();
+        foreach (_bills_og_get_content_members($og['gid'], 'bills') as $key => $bill) {
+          $rows[$key+1] = array(array(
+            'data' => $bill->title,
+            'header' => 1,
+          ));
+          kpr($bill);
+          foreach($members as $member) {
+            if ($bill->field_bill_owner['und'][0]['target_id'] == $member->uid) {
+              $amount = $bill->field_bill_amount['und'][0]['value'];
+            }
+            else {
+              $amount = 0;
+            }
+            $rows[$key+1][] = array(
+              'data' => $amount,
+            );
+          }
+        }
+        $content = '';
+        $content .= theme('table', array(
+          'header' => $header, 
+          'rows' => $rows
+        ));
+        $block['content'] = $content;
+      }
+      break;
+  }
+  return $block;
+}
+
+function bills_get_houshold_bills($gid) {
+
+}
+
+function _bills_og_get_user_members($gid) {
+  $query = db_select('users', 'u')
+    ->condition('u.uid', 0, '<>')
+    ->condition('u.status', 1, '=')
+    ->fields('u', array('uid'));
+  $query->join('og_membership', 'ogm', "ogm.gid = :gid AND u.uid = ogm.etid AND ogm.entity_type = 'user'", array(':gid' => $gid));
+  $uids = $query->execute()
+    ->fetchCol();
+  $uids = empty($uids) ? array() : $uids;
+  return user_load_multiple($uids);
+}
+
+function _bills_og_get_content_members($gid, $bundle = NULL) {
+  $query = db_select('node', 'n')
+    ->fields('n', array('nid'));
+  $query->join('og_membership', 'ogm', "ogm.gid = :gid AND n.nid = ogm.etid AND ogm.entity_type = 'node'", array(':gid' => $gid));
+  $nids = $query->execute()
+    ->fetchCol();
+  $nids = empty($nids) ? array() : $nids;
+  return node_load_multiple($nids);
+}
