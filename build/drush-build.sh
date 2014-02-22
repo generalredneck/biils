@@ -37,6 +37,6 @@ $drush fra -y
 echo "Running any updates.";
 $drush updb -y
 echo "Setting the theme default.";
-#$drush scr $build_path/scripts/default_set_theme.php
+$drush scr $build_path/scripts/default_set_theme.php
 echo "Clearing caches one last time.";
 $drush cc all -y

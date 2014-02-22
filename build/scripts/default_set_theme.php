@@ -1,8 +1,7 @@
 <?php
 
 $enable = array(
-  //The initial default theme on a Promet project is Omega. A subtheme needs to be created.
-  'theme_default' => 'omega',
+  'theme_default' => 'bootstrap',
   'admin_theme' => 'seven',
 );
 theme_enable($enable);
@@ -10,7 +9,7 @@ theme_enable($enable);
 foreach ($enable as $var => $theme) {
   if (!is_numeric($var)) {
     variable_set($var, $theme);
-    if ($theme == 'omega') {
+    if ($theme == 'bootstrap') {
       $settings =  variable_get('theme_'. $theme .'_settings');
 
       // Configure settings for conceptual theme.
