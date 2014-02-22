@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the bills_context_household feature.
+ */
+
+include_once 'bills_context_household.features.inc';
