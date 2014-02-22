@@ -5,7 +5,6 @@ dependencies[] = ctools
 dependencies[] = features
 dependencies[] = list
 dependencies[] = node
-dependencies[] = og_ui
 dependencies[] = options
 dependencies[] = strongarm
 features[ctools][] = strongarm:strongarm:1
