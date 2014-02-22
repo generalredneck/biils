@@ -2,6 +2,7 @@ admin_menu
 bills
 bills_content_type_bill
 bills_content_type_household
+bills_content_type_payment
 bills_context_household
 context
 ctools

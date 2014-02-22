@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the bills_content_type_payment feature.
+ */
+
+include_once 'bills_content_type_payment.features.inc';
