@@ -6,6 +6,7 @@ bills_content_type_payment
 bills_context_household
 bills_menu_user_menu
 bills_og_household
+bills_settings
 context
 ctools
 date
@@ -19,6 +20,7 @@ entityreference
 features
 field_collection
 job_scheduler
+jquery_update
 menu_attributes
 menu_item_visibility
 module_filter
